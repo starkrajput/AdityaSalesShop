@@ -1,0 +1,2019 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Sales - Technology Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #3a86ff;
+            --primary-dark: #2667cc;
+            --secondary-color: #ff006e;
+            --accent-color: #8338ec;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gradient: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin-bottom: 1rem;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+            a:hover {
+                color: var(--primary-dark);
+            }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+            .btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+                color: white;
+            }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+            .btn-outline:hover {
+                background: var(--primary-color);
+                color: white;
+            }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+            .section-title::after {
+                content: '';
+                position: absolute;
+                width: 70px;
+                height: 4px;
+                background: var(--gradient);
+                left: 50%;
+                bottom: -10px;
+                transform: translateX(-50%);
+                border-radius: 10px;
+            }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.97);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+            nav.scrolled {
+                padding: 0.5rem 0;
+            }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+        }
+
+            .logo span {
+                background: var(--gradient);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin-left: 5px;
+            }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+            .nav-links li {
+                margin-left: 2rem;
+            }
+
+            .nav-links a {
+                font-weight: 600;
+                color: var(--dark-color);
+                position: relative;
+            }
+
+                .nav-links a::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -5px;
+                    left: 0;
+                    width: 0;
+                    height: 2px;
+                    background: var(--gradient);
+                    transition: width 0.3s ease;
+                }
+
+                .nav-links a:hover::after,
+                .nav-links a.active::after {
+                    width: 100%;
+                }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+            .hamburger div {
+                width: 25px;
+                height: 3px;
+                background-color: var(--dark-color);
+                margin: 5px;
+                transition: all 0.3s ease;
+            }
+
+        /* Banner Section */
+        .banner {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%);
+        }
+
+        .banner-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .banner-slide.active {
+                opacity: 1;
+            }
+
+        .banner-content {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            z-index: 2;
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+            .banner-content h1 {
+                font-size: 3.5rem;
+                margin-bottom: 1.5rem;
+                text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            }
+
+            .banner-content p {
+                font-size: 1.2rem;
+                margin-bottom: 2rem;
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            }
+
+        .banner-indicators {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            z-index: 3;
+        }
+
+        .banner-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            margin: 0 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .banner-indicator.active {
+                background-color: white;
+                transform: scale(1.2);
+            }
+
+        /* Featured Products */
+        .featured-products {
+            background-color: white;
+        }
+
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+            .product-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .quick-view {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+
+        /* 360 Degree View */
+        .product-360 {
+            background-color: #f5f7fa;
+            text-align: center;
+        }
+
+        .viewer-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            height: 400px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .product-viewer {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+            .product-viewer img {
+                max-width: 80%;
+                max-height: 80%;
+                position: absolute;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+                .product-viewer img.active {
+                    opacity: 1;
+                }
+
+        .rotate-info {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+            .rotate-info i {
+                margin-right: 5px;
+            }
+
+        /* About Section */
+        .about-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .about-img {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transform: perspective(1000px) rotateY(5deg);
+            transition: all 0.5s ease;
+        }
+
+            .about-img:hover {
+                transform: perspective(1000px) rotateY(0);
+            }
+
+            .about-img img {
+                width: 100%;
+                height: auto;
+                transition: all 0.5s ease;
+            }
+
+            .about-img:hover img {
+                transform: scale(1.05);
+            }
+
+        .about-content {
+            padding: 1rem;
+        }
+
+            .about-content h2 {
+                margin-bottom: 1.5rem;
+            }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-box {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+            .stat-box:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-title {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        /* Categories Section */
+        .categories-section {
+            background-color: white;
+        }
+
+        .categories-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 250px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+            .category-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            }
+
+        .category-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .category-card:hover .category-img {
+            transform: scale(1.1);
+        }
+
+        .category-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.1) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .category-title {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .category-count {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .explore-btn {
+            width: fit-content;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+            .explore-btn:hover {
+                background-color: white;
+                color: var(--dark-color);
+            }
+
+        /* Testimonials */
+        .testimonials {
+            background-color: #f5f7fa;
+            position: relative;
+            overflow: hidden;
+            padding: 60px 0;
+        }
+
+        .testimonials-container {
+            position: relative;
+        }
+
+        .testimonial-slider {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+        .testimonial {
+            min-width: 100%;
+            display: none; /* Hide by default */
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: all 0.5s ease;
+            transform: translateX(100px);
+            position: absolute; /* Position absolutely */
+            left: 0;
+            top: 0;
+        }
+
+            .testimonial.active {
+                display: flex; /* Show when active */
+                opacity: 1;
+                transform: translateX(0);
+                position: relative; /* Back to relative when active */
+            }
+
+        .testimonial-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-content {
+            max-width: 700px;
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: #495057;
+        }
+
+        .testimonial-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #212529;
+            margin-bottom: 5px;
+        }
+
+        .testimonial-role {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 0;
+        }
+
+        .testimonial-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .testimonial-control {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0.5rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .testimonial-control:hover {
+                background-color: #007bff;
+                color: white;
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            }
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding-top: 4rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+            .footer-column h3::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 50px;
+                height: 3px;
+                background: var(--gradient);
+                border-radius: 10px;
+            }
+
+        .footer-links {
+            list-style: none;
+        }
+
+            .footer-links li {
+                margin-bottom: 0.8rem;
+            }
+
+            .footer-links a {
+                color: #adb5bd;
+                transition: all 0.3s ease;
+            }
+
+                .footer-links a:hover {
+                    color: white;
+                    padding-left: 5px;
+                }
+
+        .contact-info p {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            color: #adb5bd;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 1.5rem;
+        }
+
+            .social-links a {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 0.8rem;
+                color: white;
+                transition: all 0.3s ease;
+            }
+
+                .social-links a:hover {
+                    background: var(--gradient);
+                    transform: translateY(-3px);
+                }
+
+        .copyright {
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        /* Laptops Page Styles */
+        .page-banner {
+            height: 50vh;
+            background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%), url('/api/placeholder/1200/600');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+            .page-banner h1 {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            }
+
+            .page-banner p {
+                font-size: 1.2rem;
+                max-width: 700px;
+                margin: 0 auto;
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            }
+
+        .filter-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+            .filter-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+                font-weight: 600;
+                font-size: 0.9rem;
+            }
+
+            .filter-group select {
+                width: 100%;
+                padding: 0.8rem;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: white;
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333' width='18px' height='18px'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 10px center;
+            }
+
+                .filter-group select:focus {
+                    outline: none;
+                    border-color: var(--primary-color);
+                }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            margin-top: 1.3rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .pagination-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            border-radius: 5px;
+            background-color: white;
+            color: var(--dark-color);
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+            .pagination-link:hover,
+            .pagination-link.active {
+                background: var(--gradient);
+                color: white;
+            }
+
+        /* Product Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+            .modal.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+            .modal-close:hover {
+                background-color: var(--secondary-color);
+                color: white;
+            }
+
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .product-gallery {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #f5f7fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .product-main-img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            transition: all 0.3s ease;
+        }
+
+        .product-thumbnails {
+            display: flex;
+            margin-top: 1rem;
+            gap: 10px;
+        }
+
+        .product-thumbnail {
+            width: 70px;
+            height: 70px;
+            border-radius: 5px;
+            cursor: pointer;
+            object-fit: cover;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+            .product-thumbnail:hover,
+            .product-thumbnail.active {
+                border-color: var(--primary-color);
+                transform: scale(1.05);
+            }
+
+        .product-detail-info h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-ratings {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #ffc107;
+            margin-right: 0.5rem;
+        }
+
+        .ratings-count {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .product-detail-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-left: 1rem;
+        }
+
+        .product-description {
+            margin-bottom: 1.5rem;
+            color: #495057;
+        }
+
+        .product-features {
+            margin-bottom: 1.5rem;
+        }
+
+            .product-features h3 {
+                font-size: 1.2rem;
+                margin-bottom: 0.8rem;
+            }
+
+        .features-list {
+            list-style: none;
+        }
+
+            .features-list li {
+                margin-bottom: 0.5rem;
+                display: flex;
+                align-items: flex-start;
+            }
+
+            .features-list i {
+                color: var(--primary-color);
+                margin-right: 0.5rem;
+                margin-top: 2px;
+            }
+
+        .add-to-cart {
+            display: flex;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #f5f7fa;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .quantity-btn:hover {
+                background-color: var(--primary-color);
+                color: white;
+            }
+
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            border: none;
+            background-color: transparent;
+            font-weight: 600;
+            margin: 0 0.5rem;
+        }
+
+        .related-products {
+            padding: 2rem;
+            border-top: 1px solid #ddd;
+        }
+
+            .related-products h3 {
+                margin-bottom: 1.5rem;
+            }
+
+        .related-products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .related-product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+            .related-product-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+
+        .related-product-img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .related-product-info {
+            padding: 0.8rem;
+        }
+
+        .related-product-title {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .related-product-price {
+            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        /* Contact Page */
+        .contact-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-form {
+            padding: 1rem;
+        }
+
+            .contact-form h2 {
+                margin-bottom: 1.5rem;
+            }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+                font-weight: 600;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                width: 100%;
+                padding: 0.8rem;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                transition: all 0.3s ease;
+            }
+
+                .form-group input:focus,
+                .form-group textarea:focus {
+                    outline: none;
+                    border-color: var(--primary-color);
+                    box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.1);
+                }
+
+            .form-group textarea {
+                min-height: 150px;
+                resize: vertical;
+            }
+
+        .contact-info-card {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(58, 134, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+            .contact-info-card h2 {
+                margin-bottom: 1.5rem;
+                color: white;
+            }
+
+        .contact-info-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+            .contact-info-list li {
+                display: flex;
+                align-items: flex-start;
+                margin-bottom: 1.5rem;
+            }
+
+            .contact-info-list i {
+                margin-right: 1rem;
+                font-size: 1.2rem;
+            }
+
+        .contact-social {
+            margin-top: 1rem;
+        }
+
+            .contact-social h3 {
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+                color: white;
+            }
+
+        .map-container {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            height: 300px;
+            margin-top: 2rem;
+        }
+
+            .map-container iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .banner-content h1 {
+                font-size: 2.8rem;
+            }
+
+            .product-detail {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                z-index: 100;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                transform: translateY(-150%);
+                transition: transform 0.5s ease;
+            }
+
+                .nav-links.active {
+                    transform: translateY(0);
+                }
+
+                .nav-links li {
+                    margin: 1rem 0;
+                }
+
+            .hamburger {
+                display: block;
+            }
+
+            .banner-content h1 {
+                font-size: 2.3rem;
+            }
+
+            .banner-content p {
+                font-size: 1rem;
+            }
+
+            .contact-info-card {
+                margin-top: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .banner-content h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .about-stats {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+
+            .product-gallery {
+                padding: 1rem;
+            }
+
+            .product-thumbnails {
+                display: none;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated {
+            animation-duration: 1s;
+            animation-fill-mode: both;
+        }
+
+        .fadeInUp {
+            animation-name: fadeInUp;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fadeIn {
+            animation-name: fadeIn;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Aditya<span>Sales</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="laptops.html">Laptops</a></li>
+                <li><a href="cameras.html">Camera Accessories</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Banner Section -->
+    <section class="banner">
+        <div class="banner-slide active" style="background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%), url('R1.jpg');">
+            <div class="banner-content">
+                <h1>Welcome to Aditya Sales</h1>
+                <p>Your one-stop destination for premium laptops, cameras and accessories since 2000.</p>
+                <a href="#featured-products" class="btn">Explore Products</a>
+            </div>
+        </div>
+        <div class="banner-slide" style="background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%), url('R2.jpg');">
+            <div class="banner-content">
+                <h1>Premium Laptops for Professionals</h1>
+                <p>Find the perfect laptop for your work and creative needs.</p>
+                <a href="laptops.html" class="btn">View Laptops</a>
+            </div>
+        </div>
+        <div class="banner-slide" style="background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%), url('R3.jpg');">
+            <div class="banner-content">
+                <h1>Camera Accessories</h1>
+                <p>Enhance your photography experience with our quality accessories.</p>
+                <a href="cameras.html" class="btn">View Accessories</a>
+            </div>
+        </div>
+        <div class="banner-indicators">
+            <span class="banner-indicator active"></span>
+            <span class="banner-indicator"></span>
+            <span class="banner-indicator"></span>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="featured-products" id="featured-products">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="products-container">
+                <div class="product-card">
+                    <img src="R4.jpg" alt="Laptop Model" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Premium Ultrabook Pro</h3>
+                        <p class="product-price">₹75,999</p>
+                        <div class="product-actions">
+                            <a href="#" class="btn btn-outline quick-view" data-product="1">Quick View</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="R1.jpg" alt="Camera Lens" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Professional DSLR Lens</h3>
+                        <p class="product-price">₹24,999</p>
+                        <div class="product-actions">
+                            <a href="#" class="btn btn-outline quick-view" data-product="2">Quick View</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="R2.jpg" alt="Gaming Laptop" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Gaming Powerhouse X9</h3>
+                        <p class="product-price">₹92,999</p>
+                        <div class="product-actions">
+                            <a href="#" class="btn btn-outline quick-view" data-product="3">Quick View</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="R3.jpg" alt="Camera Tripod" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Professional Carbon Fiber Tripod</h3>
+                        <p class="product-price">₹12,499</p>
+                        <div class="product-actions">
+                            <a href="#" class="btn btn-outline quick-view" data-product="4">Quick View</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="R4.jpg" alt="Laptop Model" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Premium Ultrabook Pro</h3>
+                        <p class="product-price">₹75,999</p>
+                        <div class="product-actions">
+                            <a href="#" class="btn btn-outline quick-view" data-product="1">Quick View</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="R1.jpg" alt="Camera Lens" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Professional DSLR Lens</h3>
+                        <p class="product-price">₹24,999</p>
+                        <div class="product-actions">
+                            <a href="#" class="btn btn-outline quick-view" data-product="2">Quick View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 360 Degree Product View Section -->
+    <section class="product-360" id="product-360">
+        <div class="container">
+            <h2 class="section-title">Experience Our Products in 360°</h2>
+            <div class="viewer-container">
+                <div class="product-viewer" id="product-viewer">
+                    <img src="R1.jpg" alt="Laptop View 1" class="active">
+                    <img src="R2.jpg" alt="Laptop View 2">
+                    <img src="R3.jpg" alt="Laptop View 3">
+                    <img src="R4.jpg" alt="Laptop View 4">
+                    <img src="R1.jpg" alt="Laptop View 5">
+                    <img src="R2.jpg" alt="Laptop View 6">
+                </div>
+                <div class="rotate-info">
+                    <i class="fas fa-sync-alt"></i> Drag to rotate
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-container">
+                <div class="about-img">
+                    <img src="R1.jpg" alt="Aditya Sales Store">
+                </div>
+                <div class="about-content">
+                    <h2>About Aditya Sales</h2>
+                    <p>Founded in 2000, Aditya Sales has been a trusted name in technology retail for more than two decades. We specialize in high-quality laptops, cameras, and accessories, offering a carefully curated selection of products from leading brands.</p>
+                    <p>Our mission is to provide our customers with exceptional technology products backed by expert advice and outstanding customer service. We pride ourselves on our technical knowledge and our ability to help customers find the perfect products for their needs.</p>
+                    <div class="about-stats">
+                        <div class="stat-box">
+                            <div class="stat-number">24+</div>
+                            <div class="stat-title">Years of Service</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">70,00+</div>
+                            <div class="stat-title">Happy Customers</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-title">Products</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-title">Authentic Products</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section" id="categories">
+        <div class="container">
+            <h2 class="section-title">Browse Our Categories</h2>
+            <div class="categories-container">
+                <div class="category-card">
+                    <img src="R1.jpg" alt="Laptops" class="category-img">
+                    <div class="category-overlay">
+                        <h3 class="category-title">Laptops</h3>
+                        <p class="category-count">250+ products</p>
+                        <a href="laptops.html" class="explore-btn">Explore</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="R1.jpg" alt="Cameras" class="category-img">
+                    <div class="category-overlay">
+                        <h3 class="category-title">Cameras</h3>
+                        <p class="category-count">120+ products</p>
+                        <a href="cameras.html" class="explore-btn">Explore</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="R3.jpg" alt="Accessories" class="category-img">
+                    <div class="category-overlay">
+                        <h3 class="category-title">Accessories</h3>
+                        <p class="category-count">350+ products</p>
+                        <a href="cameras.html" class="explore-btn">Explore</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonials-container">
+                <div class="testimonial-slider">
+                    <div class="testimonial active">
+                        <img src="R2.jpg" alt="Customer" class="testimonial-img">
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">"I've been shopping at Aditya Sales for over 5 years now. Their product knowledge and after-sales service are unmatched. I recently purchased a laptop for video editing, and their recommendations were spot on!"</p>
+                            <h4 class="testimonial-name">Rajesh Kumar</h4>
+                            <p class="testimonial-role">Filmmaker</p>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <img src="R3.jpg" alt="Customer" class="testimonial-img">
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">"As a professional photographer, I need reliable equipment and accessories. Aditya Sales has been my go-to shop for all my camera accessories. Their range of products is impressive, and they always have the latest gear in stock."</p>
+                            <h4 class="testimonial-name">Priya Sharma</h4>
+                            <p class="testimonial-role">Professional Photographer</p>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <img src="R4.jpg" alt="Customer" class="testimonial-img">
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">"The gaming laptop I purchased from Aditya Sales has been performing exceptionally well. Their staff was knowledgeable and helped me choose the perfect machine for my needs. Highly recommend their services!"</p>
+                            <h4 class="testimonial-name">Vikram Singh</h4>
+                            <p class="testimonial-role">Gaming Enthusiast</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-controls">
+                    <div class="testimonial-control" id="prev-testimonial">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="testimonial-control" id="next-testimonial">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>Aditya Sales</h3>
+                    <p>Your trusted technology partner since 2000. We offer the best laptops, cameras, and accessories with expert advice and exceptional service.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="laptops.html">Laptops</a></li>
+                        <li><a href="cameras.html">Camera Accessories</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="laptops.html">Gaming Laptops</a></li>
+                        <li><a href="laptops.html">Business Laptops</a></li>
+                        <li><a href="cameras.html">DSLR Cameras</a></li>
+                        <li><a href="cameras.html">Camera Lenses</a></li>
+                        <li><a href="cameras.html">Tripods & Mounts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Sigra, Varanasi, India - 123123</p>
+                        <p><i class="fas fa-phone"></i> +91 9876543210</p>
+                        <p><i class="fas fa-envelope"></i> info@adityasales.com</p>
+                        <p><i class="fas fa-clock"></i> Mon-Sat: 10:00 AM - 8:00 PM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Aditya Sales. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Modal -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <div class="modal-close" id="modal-close">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="product-detail">
+                <div class="product-gallery">
+                    <img src="R1.jpg" alt="Product" class="product-main-img" id="modal-main-img">
+                    <div class="product-thumbnails">
+                        <img src="R2.jpg" alt="Thumbnail 1" class="product-thumbnail active" data-src="R4.jpg">
+                        <img src="R3.jpg" alt="Thumbnail 2" class="product-thumbnail" data-src="R1.jpg">
+                        <img src="R4.jpg" alt="Thumbnail 3" class="product-thumbnail" data-src="R2.jpg">
+                    </div>
+                </div>
+                <div class="product-detail-info">
+                    <h2 id="modal-product-title">Premium Ultrabook Pro</h2>
+                    <div class="product-ratings">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="ratings-count">(120 reviews)</span>
+                    </div>
+                    <div class="product-detail-price">
+                        <span id="modal-product-price">₹75,999</span>
+                        <span class="old-price">₹89,999</span>
+                    </div>
+                    <p class="product-description" id="modal-product-desc">Sleek and powerful, this premium ultrabook features the latest 12th Gen processor, 16GB RAM, 1TB SSD, and a stunning 14" 4K display. Perfect for professionals who need performance on the go.</p>
+                    <div class="product-features">
+                        <h3>Key Features</h3>
+                        <ul class="features-list" id="modal-product-features">
+                            <li><i class="fas fa-check"></i> Intel Core i7 12th Gen Processor</li>
+                            <li><i class="fas fa-check"></i> 16GB DDR5 RAM</li>
+                            <li><i class="fas fa-check"></i> 1TB NVMe SSD</li>
+                            <li><i class="fas fa-check"></i> 14" 4K UHD Display</li>
+                            <li><i class="fas fa-check"></i> Backlit Keyboard</li>
+                            <li><i class="fas fa-check"></i> 12+ Hours Battery Life</li>
+                        </ul>
+                    </div>
+                    <div class="add-to-cart">
+                        <div class="quantity">
+                            <button class="quantity-btn" id="decrease-qty"><i class="fas fa-minus"></i></button>
+                            <input type="text" class="quantity-input" value="1" readonly>
+                            <button class="quantity-btn" id="increase-qty"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <a href="#" class="btn">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+            <div class="related-products">
+                <h3>You may also like</h3>
+                <div class="related-products-grid">
+                    <div class="related-product-card">
+                        <img src="R1.jpg" alt="Related Product" class="related-product-img">
+                        <div class="related-product-info">
+                            <h4 class="related-product-title">Gaming Powerhouse X9</h4>
+                            <p class="related-product-price">₹92,999</p>
+                        </div>
+                    </div>
+                    <div class="related-product-card">
+                        <img src="R2.jpg" alt="Related Product" class="related-product-img">
+                        <div class="related-product-info">
+                            <h4 class="related-product-title">Business Ultrabook S7</h4>
+                            <p class="related-product-price">₹65,999</p>
+                        </div>
+                    </div>
+                    <div class="related-product-card">
+                        <img src="R3.jpg" alt="Related Product" class="related-product-img">
+                        <div class="related-product-info">
+                            <h4 class="related-product-title">Designer's Dream D5</h4>
+                            <p class="related-product-price">₹82,999</p>
+                        </div>
+                    </div>
+                    <div class="related-product-card">
+                        <img src="R4.jpg" alt="Related Product" class="related-product-img">
+                        <div class="related-product-info">
+                            <h4 class="related-product-title">Student Edition SE3</h4>
+                            <p class="related-product-price">₹45,999</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Navigation Bar Scroll Effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', function () {
+            navLinks.classList.toggle('active');
+        });
+
+        // Banner Slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.banner-slide');
+        const indicators = document.querySelectorAll('.banner-indicator');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        // Auto slide
+        setInterval(function () {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }, 5000);
+
+        // Click on indicators
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', function () {
+                showSlide(index);
+            });
+        });
+
+        // 360 Degree Product View
+        const productViewer = document.getElementById('product-viewer');
+        const productImages = productViewer.querySelectorAll('img');
+        const totalImages = productImages.length;
+        let isDragging = false;
+        let startX, currentImageIndex = 0;
+
+        productViewer.addEventListener('mousedown', function (e) {
+            isDragging = true;
+            startX = e.clientX;
+            e.preventDefault();
+        });
+
+        productViewer.addEventListener('touchstart', function (e) {
+            isDragging = true;
+            startX = e.touches[0].clientX;
+        });
+
+        window.addEventListener('mousemove', function (e) {
+            if (!isDragging) return;
+
+            const deltaX = e.clientX - startX;
+
+            if (Math.abs(deltaX) > 30) {
+                if (deltaX > 0) {
+                    // Rotate right
+                    currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+                } else {
+                    // Rotate left
+                    currentImageIndex = (currentImageIndex + 1) % totalImages;
+                }
+
+                productImages.forEach(img => img.classList.remove('active'));
+                productImages[currentImageIndex].classList.add('active');
+
+                startX = e.clientX;
+            }
+        });
+
+        window.addEventListener('touchmove', function (e) {
+            if (!isDragging) return;
+
+            const deltaX = e.touches[0].clientX - startX;
+
+            if (Math.abs(deltaX) > 30) {
+                if (deltaX > 0) {
+                    // Rotate right
+                    currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+                } else {
+                    // Rotate left
+                    currentImageIndex = (currentImageIndex + 1) % totalImages;
+                }
+
+                productImages.forEach(img => img.classList.remove('active'));
+                productImages[currentImageIndex].classList.add('active');
+
+                startX = e.touches[0].clientX;
+            }
+        });
+
+        window.addEventListener('mouseup', function () {
+            isDragging = false;
+        });
+
+        window.addEventListener('touchend', function () {
+            isDragging = false;
+        });
+
+        // Testimonial Slider
+        document.addEventListener('DOMContentLoaded', function () {
+            const testimonials = document.querySelectorAll('.testimonial');
+            const prevTestimonial = document.getElementById('prev-testimonial');
+            const nextTestimonial = document.getElementById('next-testimonial');
+            let currentTestimonial = 0;
+            const totalTestimonials = testimonials.length;
+
+            // Function to show a specific testimonial
+            function showTestimonial(index) {
+                // Ensure index is within bounds
+                if (index < 0) index = totalTestimonials - 1;
+                if (index >= totalTestimonials) index = 0;
+
+                // Hide all testimonials
+                testimonials.forEach(testimonial => testimonial.classList.remove('active'));
+
+                // Show the selected testimonial
+                testimonials[index].classList.add('active');
+                currentTestimonial = index;
+
+                console.log('Showing testimonial:', index); // Debug
+            }
+
+            // Initialize the first testimonial
+            showTestimonial(0);
+
+            // Previous button click
+            if (prevTestimonial) {
+                prevTestimonial.addEventListener('click', function () {
+                    console.log('Previous button clicked'); // Debug
+                    showTestimonial((currentTestimonial - 1 + totalTestimonials) % totalTestimonials);
+                });
+            }
+
+            // Next button click
+            if (nextTestimonial) {
+                nextTestimonial.addEventListener('click', function () {
+                    console.log('Next button clicked'); // Debug
+                    showTestimonial((currentTestimonial + 1) % totalTestimonials);
+                });
+            }
+
+            // Auto rotate testimonials
+            let testimonialInterval = setInterval(function () {
+                showTestimonial((currentTestimonial + 1) % totalTestimonials);
+            }, 8000);
+
+            // Pause auto-rotation on hover
+            const testimonialsContainer = document.querySelector('.testimonial-slider');
+            if (testimonialsContainer) {
+                testimonialsContainer.addEventListener('mouseenter', function () {
+                    clearInterval(testimonialInterval);
+                });
+
+                testimonialsContainer.addEventListener('mouseleave', function () {
+                    testimonialInterval = setInterval(function () {
+                        showTestimonial((currentTestimonial + 1) % totalTestimonials);
+                    }, 8000);
+                });
+            }
+        });
+
+        // Product Modal
+        // Product Modal
+        const quickViewButtons = document.querySelectorAll('.quick-view');
+        const productModal = document.getElementById('product-modal');
+        const modalClose = document.getElementById('modal-close');
+        const modalMainImg = document.getElementById('modal-main-img');
+        const modalProductTitle = document.getElementById('modal-product-title');
+        const modalProductPrice = document.getElementById('modal-product-price');
+        const modalProductDesc = document.getElementById('modal-product-desc');
+        const modalProductFeatures = document.getElementById('modal-product-features');
+        const quantityInput = document.querySelector('.quantity-input');
+        const increaseQty = document.getElementById('increase-qty');
+        const decreaseQty = document.getElementById('decrease-qty');
+
+        // Open Modal
+        quickViewButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const productId = this.getAttribute('data-product');
+                // Fetch product details based on productId (you can replace this with dynamic data)
+                const product = {
+                    title: "Premium Ultrabook Pro",
+                    price: "₹75,999",
+                    description: "Sleek and powerful, this premium ultrabook features the latest 12th Gen processor, 16GB RAM, 1TB SSD, and a stunning 14\" 4K display. Perfect for professionals who need performance on the go.",
+                    features: [
+                        "Intel Core i7 12th Gen Processor",
+                        "16GB DDR5 RAM",
+                        "1TB NVMe SSD",
+                        "14\" 4K UHD Display",
+                        "Backlit Keyboard",
+                        "12+ Hours Battery Life"
+                    ]
+                };
+
+                // Update modal content
+                modalProductTitle.textContent = product.title;
+                modalProductPrice.textContent = product.price;
+                modalProductDesc.textContent = product.description;
+                modalProductFeatures.innerHTML = product.features.map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('');
+
+                // Show modal
+                productModal.classList.add('active');
+            });
+        });
+
+        // Close Modal
+        modalClose.addEventListener('click', function () {
+            productModal.classList.remove('active');
+        });
+
+        // Quantity Controls
+        increaseQty.addEventListener('click', function () {
+            let currentQty = parseInt(quantityInput.value);
+            quantityInput.value = currentQty + 1;
+        });
+
+        decreaseQty.addEventListener('click', function () {
+            let currentQty = parseInt(quantityInput.value);
+            if (currentQty > 1) {
+                quantityInput.value = currentQty - 1;
+            }
+        });
+
+        // Thumbnail Click
+        const thumbnails = document.querySelectorAll('.product-thumbnail');
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', function () {
+                const src = this.getAttribute('data-src');
+                modalMainImg.src = src;
+                thumbnails.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Scroll Reveal Animations
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOptions = {
+            threshold: 0.1
+        };
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+
+        revealElements.forEach(element => {
+            revealObserver.observe(element);
+        });
+       
+            document.addEventListener("contextmenu", function(event){
+                event.preventDefault();
+});
+
+            document.addEventListener("keydown", function(event) {
+        if (event.keyCode == 123 ||  // F12
+            (event.ctrlKey && event.shiftKey && event.keyCode == 73) || // Ctrl+Shift+I
+            (event.ctrlKey && event.shiftKey && event.keyCode == 74) || // Ctrl+Shift+J
+            (event.ctrlKey && event.keyCode == 85)) { // Ctrl+U
+                event.preventDefault();
+        }
+});
+    
+
+    </script>
+</body>
+</html>
